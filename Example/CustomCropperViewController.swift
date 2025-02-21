@@ -7,37 +7,15 @@
 import QCropper
 
 class CustomCropperViewController: CropperViewController {
-
-    lazy var customOverlay: CustomOverlay = {
-        let co = CustomOverlay(frame: self.view.bounds)
-        co.gridLinesCount = 0
-
-        return co
-    }()
-
-    override var overlay: Overlay {
-        get {
-            return customOverlay
-        }
-
-        set {
-            if let co = newValue as? CustomOverlay {
-                customOverlay = co
-            }
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        isCropBoxPanEnabled = false
-        angleRuler.isHidden = true
-        aspectRatioPicker.isHidden = true
-    }
-
-    override func resetToDefaultLayout() {
-        super.resetToDefaultLayout()
-
-        aspectRatioLocked = true
-        setAspectRatioValue(1.2)
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    angleRuler.isHidden = true
+    aspectRatioPicker.isHidden = true
+    overlay.isBlurEnabled = false
+  }
+  
+  override func resetToDefaultLayout() {
+    super.resetToDefaultLayout()
+  }
 }

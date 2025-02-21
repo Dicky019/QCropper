@@ -32,12 +32,10 @@ public extension CropperViewControllerDelegate {
 open class CropperViewController: UIViewController, Rotatable, StateRestorable, Flipable {
   public let originalImage: UIImage
   var initialState: CropperState?
-  var isCircular: Bool
   
-  public init(originalImage: UIImage, initialState: CropperState? = nil, isCircular: Bool = false) {
+  public init(originalImage: UIImage, initialState: CropperState? = nil) {
     self.originalImage = originalImage
     self.initialState = initialState
-    self.isCircular = isCircular
     super.init(nibName: nil, bundle: nil)
     modalPresentationStyle = .fullScreen
   }
@@ -378,7 +376,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     angleRuler.bottom = toolbar.top - margin
     aspectRatioPicker.frame = angleRuler.frame
     
-//    let topHeight = topBar.isHidden ? view.safeAreaInsets.top : topBar.height
+    //    let topHeight = topBar.isHidden ? view.safeAreaInsets.top : topBar.height
     let topHeight = view.safeAreaInsets.top
     let toolbarHeight = toolbar.isHidden ? view.safeAreaInsets.bottom : toolbar.height
     let bottomHeight = (angleRuler.isHidden && aspectRatioPicker.isHidden) ? toolbarHeight : bottomView.height
@@ -426,31 +424,18 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     aspectRatioLocked = false
     currentAspectRatioValue = 1
     
-    if isCircular {
-      isCropBoxPanEnabled = false
-      overlay.isCircular = true
-      aspectRatioPicker.isHidden = true
-      angleRuler.isHidden = true
-      cropBoxFrame = CGRect(center: defaultCropBoxCenter, size: CGSize(width: maxCropRegion.size.width, height: maxCropRegion.size.width))
+    if originalImage.size.width / originalImage.size.height < cropBoxMinSize / maxCropRegion.size.height { // very long
+      cropBoxFrame = CGRect(x: (view.width - cropBoxMinSize) / 2, y: cropRegionInsets.top, width: cropBoxMinSize, height: maxCropRegion.size.height)
       matchScrollViewAndCropView()
-    } else {
-      if originalImage.size.width / originalImage.size.height < cropBoxMinSize / maxCropRegion.size.height { // very long
-        cropBoxFrame = CGRect(x: (view.width - cropBoxMinSize) / 2, y: cropRegionInsets.top, width: cropBoxMinSize, height: maxCropRegion.size.height)
-        matchScrollViewAndCropView()
-      } else if originalImage.size.height / originalImage.size.width < cropBoxMinSize / maxCropRegion.size.width { // very wide
-        cropBoxFrame = CGRect(x: cropRegionInsets.left, y: cropRegionInsets.top + (maxCropRegion.size.height - cropBoxMinSize) / 2, width: maxCropRegion.size.width, height: cropBoxMinSize)
-        matchScrollViewAndCropView()
-      }
+    } else if originalImage.size.height / originalImage.size.width < cropBoxMinSize / maxCropRegion.size.width { // very wide
+      cropBoxFrame = CGRect(x: cropRegionInsets.left, y: cropRegionInsets.top + (maxCropRegion.size.height - cropBoxMinSize) / 2, width: maxCropRegion.size.width, height: cropBoxMinSize)
+      matchScrollViewAndCropView()
     }
+    
     
     defaultCropperState = saveState()
     
     angleRuler.value = 0
-    if overlay.cropBoxFrame.size.width > overlay.cropBoxFrame.size.height {
-      aspectRatioPicker.aspectRatios = verticalAspectRatios.map { $0.rotated }
-    } else {
-      aspectRatioPicker.aspectRatios = verticalAspectRatios
-    }
     aspectRatioPicker.rotated = false
     aspectRatioPicker.selectedAspectRatio = .freeForm
     updateButtons()
