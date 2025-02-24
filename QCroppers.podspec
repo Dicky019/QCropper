@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'QCroppers'
-  s.version          = '0.1.1'
+  s.version          = '1.0.0'
   s.summary          = 'Image cropping/rotating/straightening library for iOS in Swift.'
   s.description      = <<-DESC
 Image cropping/rotating/straightening library for iOS in Swift.
