@@ -1,8 +1,8 @@
 language: swift
-osx_image: xcode11.1
+osx_image: xcode16.2
 
 env:
-- DESTINATION='platform=iOS Simulator,name=iPhone 8'
+- DESTINATION='platform=iOS Simulator,name=iPhone 16'
 - PROJECT_NAME='Example'
 
 script:
