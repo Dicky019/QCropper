@@ -65,7 +65,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
 
     let cropBoxHotArea: CGFloat = 50
     let cropBoxMinSize: CGFloat = 20
-    let barHeight: CGFloat = 44
+    let barHeight: CGFloat = 68
 
     var cropRegionInsets: UIEdgeInsets = .zero
     var maxCropRegion: CGRect = .zero
@@ -123,7 +123,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
 
     lazy var imageView: UIImageView = {
         let iv = UIImageView(image: self.originalImage)
-        iv.backgroundColor = .clear
+        iv.backgroundColor = .black
         return iv
     }()
 
@@ -135,7 +135,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
 
     // MARK: Custom UI
 
-    lazy var backgroundView: UIView = {
+    open lazy var backgroundView: UIView = {
         let view = UIView(frame: self.view.bounds)
         view.backgroundColor = UIColor(white: 0.06, alpha: 1)
         return view
@@ -222,7 +222,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
         view.clipsToBounds = true
 
         // TODO: transition
@@ -483,14 +483,14 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     }
 
     func updateButtons() {
-        if let toolbar = self.toolbar as? Toolbar {
-            toolbar.resetButton.isHidden = isCurrentlyInDefalutState
-            if initialState != nil {
-                toolbar.doneButton.isEnabled = !isCurrentlyInInitialState
-            } else {
-                toolbar.doneButton.isEnabled = true//!isCurrentlyInDefalutState
-            }
-        }
+//        if let toolbar = self.toolbar as? Toolbar {
+//            toolbar.resetButton.isHidden = isCurrentlyInDefalutState
+//            if initialState != nil {
+//                toolbar.doneButton.isEnabled = !isCurrentlyInInitialState
+//            } else {
+//                toolbar.doneButton.isEnabled = true//!isCurrentlyInDefalutState
+//            }
+//        }
     }
 
     func scrollViewZoomScaleToBounds() -> CGFloat {
