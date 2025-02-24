@@ -221,14 +221,14 @@
 				ORGANIZATIONNAME = "Chen Qizhi";
 				TargetAttributes = {
 					116C4DE4235611E600D11428 = {
-						CreatedOnToolsVersion = 11.0;
+						CreatedOnToolsVersion = 12.0;
 					};
 					116C4DFA235611E800D11428 = {
-						CreatedOnToolsVersion = 11.0;
+						CreatedOnToolsVersion = 12.0;
 						TestTargetID = 116C4DE4235611E600D11428;
 					};
 					116C4E05235611E800D11428 = {
-						CreatedOnToolsVersion = 11.0;
+						CreatedOnToolsVersion = 12.0;
 						TestTargetID = 116C4DE4235611E600D11428;
 					};
 				};

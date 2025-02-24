@@ -1,7 +1,7 @@
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 use_frameworks!
 
 target 'Example' do
-  pod 'QCropper', :path => './'    
+  pod 'QCroppers', :path => './'    
 end
