@@ -63,8 +63,8 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
     public var isCropBoxPanEnabled: Bool = true
     public var cropContentInset: UIEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
-    let cropBoxHotArea: CGFloat = 50
-    let cropBoxMinSize: CGFloat = 20
+    let cropBoxHotArea: CGFloat = 128
+    let cropBoxMinSize: CGFloat = 64
     let barHeight: CGFloat = 68
 
     var cropRegionInsets: UIEdgeInsets = .zero
@@ -107,7 +107,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
         sv.alwaysBounceVertical = true
         sv.alwaysBounceHorizontal = true
         sv.minimumZoomScale = 1
-        sv.maximumZoomScale = 20
+        sv.maximumZoomScale = 4
         sv.showsVerticalScrollIndicator = false
         sv.showsHorizontalScrollIndicator = false
         sv.clipsToBounds = false
@@ -432,7 +432,7 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
         scrollViewContainer.frame = CGRect(x: 0, y: topHeight, width: view.width, height: view.height - topHeight - bottomHeight)
 
         scrollView.minimumZoomScale = 1
-        scrollView.maximumZoomScale = 20
+        scrollView.maximumZoomScale = 4
         scrollView.zoomScale = 1
         scrollView.transform = .identity
         scrollView.bounds = CGRect(x: 0, y: 0, width: defaultCropBoxSize.width, height: defaultCropBoxSize.height)
@@ -562,9 +562,8 @@ open class CropperViewController: UIViewController, Rotatable, StateRestorable, 
                 zoomScale = self.scrollView.maximumZoomScale
             }
             self.willSetScrollViewZoomScale(zoomScale)
-
-            self.scrollView.zoomScale = zoomScale
-
+            self.scrollView.zoomScale = zoomScale >= 4 ? 4 : zoomScale
+            
             let contentOffset = CGPoint(x: normalizedCenter.x * self.imageView.width - self.scrollView.bounds.size.width * 0.5,
                                         y: normalizedCenter.y * self.imageView.height - self.scrollView.bounds.size.height * 0.5)
             self.scrollView.contentOffset = self.safeContentOffsetForScrollView(contentOffset)
